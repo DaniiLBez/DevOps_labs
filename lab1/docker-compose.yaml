@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  nginx:
+    container_name: nginx
+    build: .
+    volumes:
+      - static:/var/www/static
+    ports:
+      - "80:80"
+    user: 1000:1000
+    restart: unless-stopped
+
+volumes:
+  static:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./static
+      o: bind
