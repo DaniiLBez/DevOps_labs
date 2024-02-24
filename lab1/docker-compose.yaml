@@ -2,19 +2,19 @@ version: "3.8"
 
 services:
   nginx:
+    image: lab1-nginx
     container_name: nginx
-    build: .
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
     volumes:
-      - static:/var/www/static
+      - ./static:/var/www/static
+      - ./config/nginx.conf:/etc/nginx/nginx.conf
     ports:
-      - "80:80"
-    user: 1000:1000
+      - "8080:8080"
+    networks:
+      - nginx_network
     restart: unless-stopped
 
-volumes:
-  static:
-    driver: local
-    driver_opts:
-      type: none
-      device: ./static
-      o: bind
+networks:
+  nginx_network:
